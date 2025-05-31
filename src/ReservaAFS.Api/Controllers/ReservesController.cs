@@ -12,7 +12,7 @@ public class ReservesController : ControllerBase
     [ProducesResponseType(typeof(ResponseCreateReserveJson), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ResponseErrorMessageJson), StatusCodes.Status400BadRequest)]
     public IActionResult Create(
-        [FromServices] CreateReserveUseCase useCase,
+        [FromServices] ICreateReserveUseCase useCase,
         [FromBody] RequestCreateReserveJson request)
     {
         var result = useCase.Execute(request);
