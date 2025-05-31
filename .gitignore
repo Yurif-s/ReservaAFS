@@ -1,0 +1,16 @@
+.vs/
+
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+
+ReservaAFS.csproj
+ReservaAFS.csproj.user
+ReservaAFS.http
+ReservaAFS.sln
