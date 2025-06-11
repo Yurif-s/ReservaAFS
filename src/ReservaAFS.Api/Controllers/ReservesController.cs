@@ -9,7 +9,7 @@ namespace ReservaAFS.Api.Controllers;
 public class ReservesController : ControllerBase
 {
     [HttpPost]
-    [ProducesResponseType(typeof(ResponseCreateReserveJson), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseCreateReserveJson), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ResponseErrorMessageJson), StatusCodes.Status400BadRequest)]
     public IActionResult Create(
         [FromServices] ICreateReserveUseCase useCase,

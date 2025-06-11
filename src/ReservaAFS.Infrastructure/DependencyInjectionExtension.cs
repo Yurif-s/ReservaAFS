@@ -23,7 +23,7 @@ public static class DependencyInjectionExtension
     {
         var connectionString = configuration.GetConnectionString("Connection");
 
-        var serverVersion = new MySqlServerVersion(new Version(8, 0 ,42));
+        var serverVersion = new MySqlServerVersion(new Version(8, 0, 42));
 
         services.AddDbContext<ReservaAFSDbContext>(config => config.UseMySql(connectionString, serverVersion));
     }
