@@ -1,7 +1,7 @@
 ﻿using ReservaAFS.Communication.Enums;
 
 namespace ReservaAFS.Communication.Responses;
-public class ResponseCreateReserveJson
+public class ResponseShortReserveJson
 {
     public long ReserveId { get; set; }
     public ReserveType ReserveType { get; set; }

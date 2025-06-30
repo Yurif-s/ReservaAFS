@@ -1,4 +1,5 @@
-﻿using ReservaAFS.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using ReservaAFS.Domain.Entities;
 using ReservaAFS.Domain.Repositories.Reserves;
 
 namespace ReservaAFS.Infrastructure.DataAccess.Repositories;

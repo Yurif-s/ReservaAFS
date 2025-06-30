@@ -15,7 +15,7 @@ public class CreateReserveUseCase : ICreateReserveUseCase
         _unitOfWork = unitOfWork;
         _repository = repository;
     }
-    public ResponseCreateReserveJson Execute(RequestCreateReserveJson request)
+    public ResponseShortReserveJson Execute(RequestCreateReserveJson request)
     {
         Validate(request);
 
@@ -30,7 +30,7 @@ public class CreateReserveUseCase : ICreateReserveUseCase
 
         _unitOfWork.Commit();
 
-        return new ResponseCreateReserveJson()
+        return new ResponseShortReserveJson()
         {
             ReserveType = request.ReserveType,
             ReservationTime = request.ReservationTime
@@ -39,7 +39,7 @@ public class CreateReserveUseCase : ICreateReserveUseCase
 
     private void Validate(RequestCreateReserveJson request)
     {
-        var validator = new CreateReserveValidator();
+        var validator = new ReserveValidator();
 
         var result = validator.Validate(request);
 
