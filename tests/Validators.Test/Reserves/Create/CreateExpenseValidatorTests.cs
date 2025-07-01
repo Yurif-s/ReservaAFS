@@ -1,6 +1,7 @@
 ﻿using CommonTestsUtilities.Requests;
 using ReservaAFS.Application.UseCases.Reserves;
 using ReservaAFS.Communication.Enums;
+using ReservaAFS.Exception;
 using Shouldly;
 
 namespace Validators.Test.Reserves.Create;
@@ -28,7 +29,7 @@ public class CreateExpenseValidatorTests
         result.IsValid.ShouldBeFalse();
         result.Errors.ShouldSatisfyAllConditions(
             errors => errors.ShouldHaveSingleItem(),
-            errors => errors.ShouldContain(e => e.ErrorMessage.Equals("Reserva não pode ser para o passado"))
+            errors => errors.ShouldContain(e => e.ErrorMessage.Equals(ResourceErrorMessages.RESERVES_CANNOT_PAST))
             );
     }
 
@@ -47,7 +48,7 @@ public class CreateExpenseValidatorTests
         result.IsValid.ShouldBeFalse();
         result.Errors.ShouldSatisfyAllConditions(
             errors => errors.ShouldHaveSingleItem(),
-            errors => errors.ShouldContain(e => e.ErrorMessage.Equals("Descrição é obrigatória"))
+            errors => errors.ShouldContain(e => e.ErrorMessage.Equals(ResourceErrorMessages.DESCRIPTION_INVALID))
             );
     }
     [Fact]
@@ -62,7 +63,7 @@ public class CreateExpenseValidatorTests
         result.IsValid.ShouldBeFalse();
         result.Errors.ShouldSatisfyAllConditions(
             errors => errors.ShouldHaveSingleItem(),
-            errors => errors.ShouldContain(e => e.ErrorMessage.Equals("Recurso reservado é inválido"))
+            errors => errors.ShouldContain(e => e.ErrorMessage.Equals(ResourceErrorMessages.RESERVE_TYPE_INVALID))
             );
     }
 }

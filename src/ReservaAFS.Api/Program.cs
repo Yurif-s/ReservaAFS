@@ -1,4 +1,5 @@
 using ReservaAFS.Api.Filters;
+using ReservaAFS.Api.Middlewares;
 using ReservaAFS.Application;
 using ReservaAFS.Infrastructure;
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +23,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<CultureMiddleware>();
 
 app.UseHttpsRedirection();
 

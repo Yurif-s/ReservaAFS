@@ -1,13 +1,14 @@
 ﻿using FluentValidation;
 using ReservaAFS.Communication.Requests;
+using ReservaAFS.Exception;
 
 namespace ReservaAFS.Application.UseCases.Reserves;
 public class ReserveValidator : AbstractValidator<RequestCreateReserveJson>
 {
     public ReserveValidator()
     {
-        RuleFor(reserve => reserve.ReservationTime).GreaterThan(DateTime.UtcNow).WithMessage("Reserva não pode ser para o passado");
-        RuleFor(reserve => reserve.Description).NotEmpty().WithMessage("Descrição é obrigatória");
-        RuleFor(reserve => reserve.ReserveType).IsInEnum().WithMessage("Recurso reservado é inválido");
+        RuleFor(reserve => reserve.ReservationTime).GreaterThan(DateTime.UtcNow).WithMessage(ResourceErrorMessages.RESERVES_CANNOT_PAST);
+        RuleFor(reserve => reserve.Description).NotEmpty().WithMessage(ResourceErrorMessages.DESCRIPTION_INVALID);
+        RuleFor(reserve => reserve.ReserveType).IsInEnum().WithMessage(ResourceErrorMessages.RESERVE_TYPE_INVALID);
     }
 }
