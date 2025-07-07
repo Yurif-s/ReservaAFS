@@ -1,4 +1,5 @@
-﻿using ReservaAFS.Communication.Requests;
+﻿using AutoMapper;
+using ReservaAFS.Communication.Requests;
 using ReservaAFS.Communication.Responses;
 using ReservaAFS.Domain.Entities;
 using ReservaAFS.Domain.Repositories;
@@ -10,31 +11,24 @@ public class CreateReserveUseCase : ICreateReserveUseCase
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IReservesRepository _repository;
-    public CreateReserveUseCase(IReservesRepository repository, IUnitOfWork unitOfWork)
+    private readonly IMapper _mapper;
+    public CreateReserveUseCase(IReservesRepository repository, IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _repository = repository;
+        _mapper = mapper;
     }
-    public ResponseShortReserveJson Execute(RequestCreateReserveJson request)
+    public async Task<ResponseShortReserveJson> Execute(RequestCreateReserveJson request)
     {
         Validate(request);
 
-        var entity = new Reserve
-        {
-            Description = request.Description,
-            ReservationTime = request.ReservationTime,
-            ReserveType = (Domain.Enums.ReserveType)request.ReserveType
-        };
+        var entity = _mapper.Map<Reserve>(request);
 
-        _repository.Add(entity);
+        await _repository.Add(entity);
 
-        _unitOfWork.Commit();
+        await _unitOfWork.Commit();
 
-        return new ResponseShortReserveJson()
-        {
-            ReserveType = request.ReserveType,
-            ReservationTime = request.ReservationTime
-        };
+        return _mapper.Map<ResponseShortReserveJson>(entity);
     }
 
     private void Validate(RequestCreateReserveJson request)

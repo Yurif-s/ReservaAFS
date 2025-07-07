@@ -10,5 +10,5 @@ internal class ReservesRepository : IReservesRepository
     {
         _dbContext = dbContext;
     }
-    public void Add(Reserve reserve) => _dbContext.Reserves.Add(reserve);
+    public async Task Add(Reserve reserve) => await _dbContext.Reserves.AddAsync(reserve);
 }

@@ -11,12 +11,12 @@ public class ReservesController : ControllerBase
     [HttpPost]
     [ProducesResponseType(typeof(ResponseShortReserveJson), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ResponseErrorMessageJson), StatusCodes.Status400BadRequest)]
-    public IActionResult Create(
+    public async Task<IActionResult> Create(
         [FromServices] ICreateReserveUseCase useCase,
         [FromBody] RequestCreateReserveJson request)
     {
-        var result = useCase.Execute(request);
+        var response = await useCase.Execute(request);
 
-        return Created(string.Empty, request);
+        return Created(string.Empty, response);
     }
 }

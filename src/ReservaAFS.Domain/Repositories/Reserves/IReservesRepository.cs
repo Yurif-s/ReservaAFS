@@ -3,5 +3,5 @@
 namespace ReservaAFS.Domain.Repositories.Reserves;
 public interface IReservesRepository
 {
-    void Add(Reserve reserve);
+    Task Add(Reserve reserve);
 }

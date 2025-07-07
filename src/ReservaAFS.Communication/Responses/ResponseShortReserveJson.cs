@@ -3,7 +3,6 @@
 namespace ReservaAFS.Communication.Responses;
 public class ResponseShortReserveJson
 {
-    public long ReserveId { get; set; }
-    public ReserveType ReserveType { get; set; }
     public DateTime ReservationTime { get; set; }
+    public ReserveType ReserveType { get; set; }
 }
