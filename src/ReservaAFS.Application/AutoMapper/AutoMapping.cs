@@ -18,6 +18,7 @@ public class AutoMapping : Profile
     }
     private void EntityToResponse()
     {
+        CreateMap<Reserve, ResponseCreatedReserveJson>();
         CreateMap<Reserve, ResponseShortReserveJson>();
     }
 }

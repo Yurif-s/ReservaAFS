@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using ReservaAFS.Communication.Responses;
+using ReservaAFS.Exception;
 using ReservaAFS.Exception.ExceptionsBase;
 
 namespace ReservaAFS.Api.Filters;
@@ -22,7 +23,7 @@ public class ExceptionFilter : IExceptionFilter
             var exception = (ErrorOnValidationException)context.Exception;
             var errorResponse = new ResponseErrorMessageJson(exception.Errors);
 
-            context.HttpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
+            context.HttpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
             context.Result = new ObjectResult(errorResponse);
         }
         else
@@ -35,7 +36,7 @@ public class ExceptionFilter : IExceptionFilter
     }
     private void ThrowUnknowError(ExceptionContext context)
     {
-        var errorResponse = new ResponseErrorMessageJson("Erro desconhecido.");
+        var errorResponse = new ResponseErrorMessageJson(ResourceErrorMessages.THROW_UNKNOW_ERROR);
 
         context.HttpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
         context.Result = new ObjectResult(errorResponse);

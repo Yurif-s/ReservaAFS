@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using ReservaAFS.Application.AutoMapper;
 using ReservaAFS.Application.UseCases.Reserves.Create;
+using ReservaAFS.Application.UseCases.Reserves.GetAll;
 
 namespace ReservaAFS.Application;
 public static class DependencyInjectionExtension
@@ -18,5 +19,6 @@ public static class DependencyInjectionExtension
     private static void AddUseCases(IServiceCollection services)
     {
         services.AddScoped<ICreateReserveUseCase, CreateReserveUseCase>();
+        services.AddScoped<IGetAllReservesUseCase, GetAllReservesUseCase>();
     }
 }

@@ -61,7 +61,7 @@ namespace ReservaAFS.Exception {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Description is required.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Description is required..
         /// </summary>
         public static string DESCRIPTION_INVALID {
             get {
@@ -70,7 +70,7 @@ namespace ReservaAFS.Exception {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Reserved resource is invalid.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Reserved resource is invalid..
         /// </summary>
         public static string RESERVE_TYPE_INVALID {
             get {
@@ -79,11 +79,20 @@ namespace ReservaAFS.Exception {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Reserves cannot be for the past.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Reserves cannot be for the past..
         /// </summary>
         public static string RESERVES_CANNOT_PAST {
             get {
                 return ResourceManager.GetString("RESERVES_CANNOT_PAST", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Unknow error..
+        /// </summary>
+        public static string THROW_UNKNOW_ERROR {
+            get {
+                return ResourceManager.GetString("THROW_UNKNOW_ERROR", resourceCulture);
             }
         }
     }

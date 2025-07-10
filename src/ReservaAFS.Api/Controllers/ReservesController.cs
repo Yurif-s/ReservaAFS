@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ReservaAFS.Application.UseCases.Reserves.Create;
+using ReservaAFS.Application.UseCases.Reserves.GetAll;
 using ReservaAFS.Communication.Requests;
 using ReservaAFS.Communication.Responses;
 
@@ -9,7 +10,7 @@ namespace ReservaAFS.Api.Controllers;
 public class ReservesController : ControllerBase
 {
     [HttpPost]
-    [ProducesResponseType(typeof(ResponseShortReserveJson), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ResponseCreatedReserveJson), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ResponseErrorMessageJson), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Create(
         [FromServices] ICreateReserveUseCase useCase,
@@ -18,5 +19,19 @@ public class ReservesController : ControllerBase
         var response = await useCase.Execute(request);
 
         return Created(string.Empty, response);
+    }
+
+    [HttpGet]
+    [ProducesResponseType(typeof(ResponseReservesJson), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> GetAll(
+        [FromServices] IGetAllReservesUseCase useCase)
+    {
+        var response = await useCase.Execute();
+
+        if(response.Reserves.Count != 0)
+            return Ok(response);
+
+        return NoContent();
     }
 }

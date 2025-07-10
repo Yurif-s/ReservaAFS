@@ -4,5 +4,5 @@ using ReservaAFS.Communication.Responses;
 namespace ReservaAFS.Application.UseCases.Reserves.Create;
 public interface ICreateReserveUseCase
 {
-    public Task<ResponseShortReserveJson> Execute(RequestCreateReserveJson request);
+    public Task<ResponseCreatedReserveJson> Execute(RequestCreateReserveJson request);
 }

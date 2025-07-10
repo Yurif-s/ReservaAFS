@@ -18,7 +18,7 @@ public class CreateReserveUseCase : ICreateReserveUseCase
         _repository = repository;
         _mapper = mapper;
     }
-    public async Task<ResponseShortReserveJson> Execute(RequestCreateReserveJson request)
+    public async Task<ResponseCreatedReserveJson> Execute(RequestCreateReserveJson request)
     {
         Validate(request);
 
@@ -28,7 +28,7 @@ public class CreateReserveUseCase : ICreateReserveUseCase
 
         await _unitOfWork.Commit();
 
-        return _mapper.Map<ResponseShortReserveJson>(entity);
+        return _mapper.Map<ResponseCreatedReserveJson>(entity);
     }
 
     private void Validate(RequestCreateReserveJson request)
