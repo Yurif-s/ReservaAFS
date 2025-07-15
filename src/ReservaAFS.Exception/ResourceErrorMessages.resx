@@ -123,6 +123,9 @@
   <data name="RESERVES_CANNOT_PAST" xml:space="preserve">
     <value>Reserves cannot be for the past.</value>
   </data>
+  <data name="RESERVE_NOT_FOUND" xml:space="preserve">
+    <value>Reserve not found.</value>
+  </data>
   <data name="RESERVE_TYPE_INVALID" xml:space="preserve">
     <value>Reserved resource is invalid.</value>
   </data>

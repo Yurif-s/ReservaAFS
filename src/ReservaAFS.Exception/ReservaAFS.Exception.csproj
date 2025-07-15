@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="ResourceErrorMessages.pt-br.resx">
+    <EmbeddedResource Update="ResourceErrorMessages.pt-BR.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="ResourceErrorMessages.resx">

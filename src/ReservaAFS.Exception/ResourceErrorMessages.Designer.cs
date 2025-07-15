@@ -70,6 +70,15 @@ namespace ReservaAFS.Exception {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Reserve not found..
+        /// </summary>
+        public static string RESERVE_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("RESERVE_NOT_FOUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Reserved resource is invalid..
         /// </summary>
         public static string RESERVE_TYPE_INVALID {

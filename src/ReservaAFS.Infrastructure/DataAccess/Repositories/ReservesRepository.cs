@@ -14,6 +14,11 @@ internal class ReservesRepository : IReservesRepository
 
     public async Task<List<Reserve>> GetAll()
     {
-        return await _dbContext.Reserves.ToListAsync();
+        return await _dbContext.Reserves.AsNoTracking().ToListAsync();
+    }
+
+    public async Task<Reserve?> GetById(long id)
+    {
+        return await _dbContext.Reserves.AsNoTracking().FirstOrDefaultAsync(expense => expense.Id == id);
     }
 }

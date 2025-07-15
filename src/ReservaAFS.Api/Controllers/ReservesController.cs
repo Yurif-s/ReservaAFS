@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ReservaAFS.Application.UseCases.Reserves.Create;
 using ReservaAFS.Application.UseCases.Reserves.GetAll;
+using ReservaAFS.Application.UseCases.Reserves.GetById;
 using ReservaAFS.Communication.Requests;
 using ReservaAFS.Communication.Responses;
 
@@ -29,9 +30,22 @@ public class ReservesController : ControllerBase
     {
         var response = await useCase.Execute();
 
-        if(response.Reserves.Count != 0)
+        if (response.Reserves.Count != 0)
             return Ok(response);
 
         return NoContent();
+    }
+
+    [HttpGet]
+    [Route("{id}")]
+    [ProducesResponseType(typeof(ResponseReserveJson), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetById(
+        [FromServices] IGetReserveByIdUseCase useCase, 
+        [FromRoute] long id)
+    {
+        var response = await useCase.Execute(id);
+
+        return Ok(response);
     }
 }

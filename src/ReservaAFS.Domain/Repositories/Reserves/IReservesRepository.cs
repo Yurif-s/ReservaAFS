@@ -5,4 +5,5 @@ public interface IReservesRepository
 {
     Task Add(Reserve reserve);
     Task<List<Reserve>> GetAll();
+    Task<Reserve?> GetById(long id);
 }
