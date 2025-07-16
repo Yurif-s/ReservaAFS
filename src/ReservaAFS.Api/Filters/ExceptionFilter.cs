@@ -18,27 +18,12 @@ public class ExceptionFilter : IExceptionFilter
 
     private void HandleProjectException(ExceptionContext context)
     {
-        if (context.Exception is ErrorOnValidationException errorOnValidationException)
-        {
-            var errorResponse = new ResponseErrorMessageJson(errorOnValidationException.Errors);
+        var reserveAfsException = (ReservaAFSException)context.Exception;
 
-            context.HttpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
-            context.Result = new BadRequestObjectResult(errorResponse);
-        }
-        else if (context.Exception is NotFoundException notFoundException)
-        {
-            var errorResponse = new ResponseErrorMessageJson(notFoundException.Message);
+        var errorResponse = new ResponseErrorMessageJson(reserveAfsException.GetErrors());
 
-            context.HttpContext.Response.StatusCode = StatusCodes.Status404NotFound;
-            context.Result = new NotFoundObjectResult(errorResponse);
-        }
-        else
-        {
-            var errorResponse = new ResponseErrorMessageJson(context.Exception.Message);
-
-            context.HttpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
-            context.Result = new BadRequestObjectResult(errorResponse);
-        }
+        context.HttpContext.Response.StatusCode = reserveAfsException.StatusCode;
+        context.Result = new ObjectResult(errorResponse);
     }
     private void ThrowUnknowError(ExceptionContext context)
     {
