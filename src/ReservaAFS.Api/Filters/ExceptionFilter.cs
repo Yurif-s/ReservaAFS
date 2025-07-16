@@ -27,7 +27,7 @@ public class ExceptionFilter : IExceptionFilter
         }
         else if (context.Exception is NotFoundException notFoundException)
         {
-            var errorResponse = new ResponseErrorMessageJson(notFoundException.Error);
+            var errorResponse = new ResponseErrorMessageJson(notFoundException.Message);
 
             context.HttpContext.Response.StatusCode = StatusCodes.Status404NotFound;
             context.Result = new NotFoundObjectResult(errorResponse);
