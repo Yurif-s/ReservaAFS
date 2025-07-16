@@ -10,9 +10,9 @@ namespace ReservaAFS.Application.UseCases.Reserves.Create;
 public class CreateReserveUseCase : ICreateReserveUseCase
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IReservesRepository _repository;
+    private readonly IReservesWriteOnlyRepository _repository;
     private readonly IMapper _mapper;
-    public CreateReserveUseCase(IReservesRepository repository, IUnitOfWork unitOfWork, IMapper mapper)
+    public CreateReserveUseCase(IReservesWriteOnlyRepository repository, IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _repository = repository;

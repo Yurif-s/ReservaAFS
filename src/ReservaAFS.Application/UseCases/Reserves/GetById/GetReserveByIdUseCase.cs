@@ -7,9 +7,9 @@ using ReservaAFS.Exception.ExceptionsBase;
 namespace ReservaAFS.Application.UseCases.Reserves.GetById;
 public class GetReserveByIdUseCase : IGetReserveByIdUseCase
 {
-    private readonly IReservesRepository _repository;
+    private readonly IReservesReadOnlyRepository _repository;
     private readonly IMapper _mapper;
-    public GetReserveByIdUseCase(IReservesRepository repository, IMapper mapper)
+    public GetReserveByIdUseCase(IReservesReadOnlyRepository repository, IMapper mapper)
     {
         _mapper = mapper;
         _repository = repository;

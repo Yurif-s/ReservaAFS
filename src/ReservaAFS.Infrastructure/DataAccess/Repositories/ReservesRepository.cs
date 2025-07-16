@@ -3,7 +3,7 @@ using ReservaAFS.Domain.Entities;
 using ReservaAFS.Domain.Repositories.Reserves;
 
 namespace ReservaAFS.Infrastructure.DataAccess.Repositories;
-internal class ReservesRepository : IReservesRepository
+internal class ReservesRepository : IReservesReadOnlyRepository, IReservesWriteOnlyRepository
 {
     private ReservaAFSDbContext _dbContext;
     public ReservesRepository(ReservaAFSDbContext dbContext)

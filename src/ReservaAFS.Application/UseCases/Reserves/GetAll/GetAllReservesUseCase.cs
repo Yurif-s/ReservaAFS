@@ -5,9 +5,9 @@ using ReservaAFS.Domain.Repositories.Reserves;
 namespace ReservaAFS.Application.UseCases.Reserves.GetAll;
 public class GetAllReservesUseCase : IGetAllReservesUseCase
 {
-    private readonly IReservesRepository _repository;
+    private readonly IReservesReadOnlyRepository _repository;
     private readonly IMapper _mapper;
-    public GetAllReservesUseCase(IReservesRepository repository, IMapper mapper)
+    public GetAllReservesUseCase(IReservesReadOnlyRepository repository, IMapper mapper)
     {
         _repository = repository;
         _mapper = mapper;
