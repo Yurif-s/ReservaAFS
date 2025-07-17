@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ReservaAFS.Application.UseCases.Reserves.Create;
+using ReservaAFS.Application.UseCases.Reserves.Delete;
 using ReservaAFS.Application.UseCases.Reserves.GetAll;
 using ReservaAFS.Application.UseCases.Reserves.GetById;
 using ReservaAFS.Communication.Requests;
@@ -39,7 +40,7 @@ public class ReservesController : ControllerBase
     [HttpGet]
     [Route("{id}")]
     [ProducesResponseType(typeof(ResponseReserveJson), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ResponseErrorMessageJson),StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById(
         [FromServices] IGetReserveByIdUseCase useCase, 
         [FromRoute] long id)
@@ -48,4 +49,18 @@ public class ReservesController : ControllerBase
 
         return Ok(response);
     }
+
+    [HttpDelete]
+    [Route("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ResponseErrorMessageJson), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Delete(
+        [FromServices] IDeleteReserveUseCase useCase,
+        [FromRoute] long id)
+    {
+        await useCase.Execute(id);
+
+        return NoContent();
+    }
+
 }

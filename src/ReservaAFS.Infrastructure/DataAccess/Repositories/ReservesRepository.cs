@@ -12,13 +12,22 @@ internal class ReservesRepository : IReservesReadOnlyRepository, IReservesWriteO
     }
     public async Task Add(Reserve reserve) => await _dbContext.Reserves.AddAsync(reserve);
 
+    public async Task<bool> Delete(long id)
+    {
+        var result = await _dbContext.Reserves.FirstOrDefaultAsync(reserve => reserve.Id == id);
+        if (result is null) 
+            return false;
+
+        _dbContext.Reserves.Remove(result);
+
+        return true;
+    }
+
     public async Task<List<Reserve>> GetAll()
     {
         return await _dbContext.Reserves.AsNoTracking().ToListAsync();
     }
 
-    public async Task<Reserve?> GetById(long id)
-    {
-        return await _dbContext.Reserves.AsNoTracking().FirstOrDefaultAsync(expense => expense.Id == id);
-    }
+    public async Task<Reserve?> GetById(long id) => await _dbContext.Reserves.AsNoTracking().FirstOrDefaultAsync(expense => expense.Id == id);
+    
 }
