@@ -3,8 +3,10 @@ using ReservaAFS.Application.UseCases.Reserves.Create;
 using ReservaAFS.Application.UseCases.Reserves.Delete;
 using ReservaAFS.Application.UseCases.Reserves.GetAll;
 using ReservaAFS.Application.UseCases.Reserves.GetById;
+using ReservaAFS.Application.UseCases.Reserves.Update;
 using ReservaAFS.Communication.Requests;
 using ReservaAFS.Communication.Responses;
+using ReservaAFS.Exception.ExceptionsBase;
 
 namespace ReservaAFS.Api.Controllers;
 [Route("api/[controller]")]
@@ -16,7 +18,7 @@ public class ReservesController : ControllerBase
     [ProducesResponseType(typeof(ResponseErrorMessageJson), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Create(
         [FromServices] ICreateReserveUseCase useCase,
-        [FromBody] RequestCreateReserveJson request)
+        [FromBody] RequestReserveJson request)
     {
         var response = await useCase.Execute(request);
 
@@ -63,4 +65,18 @@ public class ReservesController : ControllerBase
         return NoContent();
     }
 
+    [HttpPut]
+    [Route("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ResponseErrorMessageJson), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ResponseErrorMessageJson), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Update(
+        [FromServices] IUpdateReserveUseCase useCase,
+        [FromBody] RequestReserveJson request,
+        [FromRoute] long id)
+    {
+        await useCase.Execute(id, request);
+
+        return NoContent();
+    }
 }

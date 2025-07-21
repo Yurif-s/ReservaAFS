@@ -1,34 +1,37 @@
-﻿using AutoMapper;
+﻿
+using AutoMapper;
 using ReservaAFS.Communication.Requests;
-using ReservaAFS.Communication.Responses;
-using ReservaAFS.Domain.Entities;
 using ReservaAFS.Domain.Repositories;
 using ReservaAFS.Domain.Repositories.Reserves;
+using ReservaAFS.Exception;
 using ReservaAFS.Exception.ExceptionsBase;
 
-namespace ReservaAFS.Application.UseCases.Reserves.Create;
-public class CreateReserveUseCase : ICreateReserveUseCase
+namespace ReservaAFS.Application.UseCases.Reserves.Update;
+public class UpdateReserveUseCase : IUpdateReserveUseCase
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IReservesWriteOnlyRepository _repository;
+    private readonly IReserveUpdateOnlyRepository _repository;
     private readonly IMapper _mapper;
-    public CreateReserveUseCase(IReservesWriteOnlyRepository repository, IUnitOfWork unitOfWork, IMapper mapper)
+    public UpdateReserveUseCase(IUnitOfWork unitOfWork, IReserveUpdateOnlyRepository repository, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _repository = repository;
         _mapper = mapper;
     }
-    public async Task<ResponseCreatedReserveJson> Execute(RequestReserveJson request)
+    public async Task Execute(long id, RequestReserveJson request)
     {
         Validate(request);
 
-        var entity = _mapper.Map<Reserve>(request);
+        var reserve = await _repository.GetById(id);
 
-        await _repository.Add(entity);
+        if (reserve is null)
+            throw new NotFoundException(ResourceErrorMessages.RESERVE_NOT_FOUND);
+
+        _mapper.Map(request, reserve);
+
+        _repository.Update(reserve);
 
         await _unitOfWork.Commit();
-
-        return _mapper.Map<ResponseCreatedReserveJson>(entity);
     }
 
     private void Validate(RequestReserveJson request)

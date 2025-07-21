@@ -3,11 +3,11 @@ using ReservaAFS.Communication.Enums;
 using ReservaAFS.Communication.Requests;
 
 namespace CommonTestsUtilities.Requests;
-public class RequestCreateReserveJsonBuilder
+public class RequestReserveJsonBuilder
 {
-    public static RequestCreateReserveJson Build()
+    public static RequestReserveJson Build()
     {
-        return new Faker<RequestCreateReserveJson>()
+        return new Faker<RequestReserveJson>()
             .RuleFor(request => request.ReservationTime, faker => faker.Date.Future())
             .RuleFor(r => r.Description, f => f.Commerce.ProductDescription())
             .RuleFor(r => r.ReserveType, f => f.PickRandom<ReserveType>());

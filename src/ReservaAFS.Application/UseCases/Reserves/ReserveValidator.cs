@@ -3,7 +3,7 @@ using ReservaAFS.Communication.Requests;
 using ReservaAFS.Exception;
 
 namespace ReservaAFS.Application.UseCases.Reserves;
-public class ReserveValidator : AbstractValidator<RequestCreateReserveJson>
+public class ReserveValidator : AbstractValidator<RequestReserveJson>
 {
     public ReserveValidator()
     {

@@ -11,7 +11,7 @@ public class CreateExpenseValidatorTests
     public void Success()
     {
         var validator = new ReserveValidator();
-        var request = RequestCreateReserveJsonBuilder.Build();
+        var request = RequestReserveJsonBuilder.Build();
 
         var result = validator.Validate(request);
 
@@ -21,7 +21,7 @@ public class CreateExpenseValidatorTests
     public void ErrorReservesCannotPast()
     {
         var validator = new ReserveValidator();
-        var request = RequestCreateReserveJsonBuilder.Build();
+        var request = RequestReserveJsonBuilder.Build();
 
         request.ReservationTime = DateTime.UtcNow.AddDays(-1);
         var result = validator.Validate(request);
@@ -40,7 +40,7 @@ public class CreateExpenseValidatorTests
     public void ErrorDescriptionInvalid(string description)
     {
         var validator = new ReserveValidator();
-        var request = RequestCreateReserveJsonBuilder.Build();
+        var request = RequestReserveJsonBuilder.Build();
 
         request.Description = description; 
         var result = validator.Validate(request);
@@ -55,7 +55,7 @@ public class CreateExpenseValidatorTests
     public void ErrorReserveTypeInvalid()
     {
         var validator = new ReserveValidator();
-        var request = RequestCreateReserveJsonBuilder.Build();
+        var request = RequestReserveJsonBuilder.Build();
 
         request.ReserveType = (ReserveType)10;
         var result = validator.Validate(request);
