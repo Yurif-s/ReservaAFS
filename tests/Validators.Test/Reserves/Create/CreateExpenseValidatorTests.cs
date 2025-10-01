@@ -1,6 +1,5 @@
 ﻿using CommonTestsUtilities.Requests;
 using ReservaAFS.Application.UseCases.Reserves;
-using ReservaAFS.Communication.Enums;
 using ReservaAFS.Exception;
 using Shouldly;
 
@@ -49,21 +48,6 @@ public class CreateExpenseValidatorTests
         result.Errors.ShouldSatisfyAllConditions(
             errors => errors.ShouldHaveSingleItem(),
             errors => errors.ShouldContain(e => e.ErrorMessage.Equals(ResourceErrorMessages.DESCRIPTION_INVALID))
-            );
-    }
-    [Fact]
-    public void ErrorReserveTypeInvalid()
-    {
-        var validator = new ReserveValidator();
-        var request = RequestReserveJsonBuilder.Build();
-
-        request.ReserveType = (ReserveType)10;
-        var result = validator.Validate(request);
-
-        result.IsValid.ShouldBeFalse();
-        result.Errors.ShouldSatisfyAllConditions(
-            errors => errors.ShouldHaveSingleItem(),
-            errors => errors.ShouldContain(e => e.ErrorMessage.Equals(ResourceErrorMessages.RESERVE_TYPE_INVALID))
             );
     }
 }

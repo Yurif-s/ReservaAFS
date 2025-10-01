@@ -9,4 +9,6 @@ internal class ReservaAFSDbContext : DbContext
         
     }
     public DbSet<Reserve> Reserves { get; set; }
+    public DbSet<Equipment> Equipments { get; set; }
+    public DbSet<User> Users { get; set; }
 }
