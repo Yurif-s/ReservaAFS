@@ -19,8 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="UseCases\Equipments\Delete\" />
-    <Folder Include="UseCases\Equipments\Update\" />
     <Folder Include="UseCases\Users\Delete\" />
     <Folder Include="UseCases\Users\GetAll\" />
     <Folder Include="UseCases\Users\GetById\" />

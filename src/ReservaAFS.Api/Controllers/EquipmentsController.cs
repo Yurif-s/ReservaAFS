@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ReservaAFS.Application.UseCases.Equipments.Create;
+using ReservaAFS.Application.UseCases.Equipments.Delete;
 using ReservaAFS.Application.UseCases.Equipments.GetAll;
 using ReservaAFS.Application.UseCases.Equipments.GetById;
+using ReservaAFS.Application.UseCases.Equipments.Update;
 using ReservaAFS.Communication.Requests;
 using ReservaAFS.Communication.Responses;
 
@@ -30,7 +32,7 @@ public class EquipmentsController : ControllerBase
     {
         var response = await useCase.Execute();
 
-        if(response.Equipments.Count == 0)
+        if (response.Equipments.Count == 0)
             return NoContent();
 
         return Ok(response);
@@ -47,5 +49,33 @@ public class EquipmentsController : ControllerBase
         var response = await useCase.Execute(id);
 
         return Ok(response);
+    }
+
+    [HttpPut]
+    [Route("{id:long}")]
+    [ProducesResponseType(typeof(ResponseCreatedEquipmentJson), StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ResponseErrorMessageJson), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ResponseErrorMessageJson), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Update(
+        [FromServices] IUpdateEquipmentUseCase useCase,
+        [FromBody] RequestEquipmentJson request,
+        [FromRoute] long id)
+    {
+        await useCase.Execute(id, request);
+
+        return NoContent();
+    }
+
+    [HttpDelete]
+    [Route("{id:long}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ResponseErrorMessageJson), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Delete(
+        [FromServices] IDeleteEquipmentUseCase useCase,
+        [FromRoute] long id)
+    {
+        await useCase.Execute(id);
+
+        return NoContent();
     }
 }
