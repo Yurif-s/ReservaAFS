@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ReservaAFS.Domain.Repositories;
+using ReservaAFS.Domain.Repositories.Equipments;
 using ReservaAFS.Domain.Repositories.Reserves;
 using ReservaAFS.Infrastructure.DataAccess;
 using ReservaAFS.Infrastructure.DataAccess.Repositories;
@@ -17,6 +18,9 @@ public static class DependencyInjectionExtension
     private static void AddRepositories(IServiceCollection services)
     {
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IEquipmentsReadOnlyRepository, EquipmentsRepository>();
+        services.AddScoped<IEquipmentsWriteOnlyRepository, EquipmentsRepository>();
+        services.AddScoped<IEquipmentsUpdateOnlyRepository, EquipmentsRepository>();
         services.AddScoped<IReservesReadOnlyRepository, ReservesRepository>();
         services.AddScoped<IReservesWriteOnlyRepository, ReservesRepository>();
         services.AddScoped<IReserveUpdateOnlyRepository, ReservesRepository>();

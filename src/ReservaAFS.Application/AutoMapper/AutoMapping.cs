@@ -20,6 +20,8 @@ public class AutoMapping : Profile
     }
     private void EntityToResponse()
     {
+        CreateMap<Equipment, ResponseCreatedEquipmentJson>();
+        CreateMap<Equipment, ResponseEquipmentJson>();
         CreateMap<Reserve, ResponseCreatedReserveJson>();
         CreateMap<Reserve, ResponseShortReserveJson>();
         CreateMap<Reserve, ResponseReserveJson>();

@@ -6,7 +6,6 @@ using ReservaAFS.Application.UseCases.Reserves.GetById;
 using ReservaAFS.Application.UseCases.Reserves.Update;
 using ReservaAFS.Communication.Requests;
 using ReservaAFS.Communication.Responses;
-using ReservaAFS.Exception.ExceptionsBase;
 
 namespace ReservaAFS.Api.Controllers;
 [Route("api/[controller]")]
@@ -40,7 +39,7 @@ public class ReservesController : ControllerBase
     }
 
     [HttpGet]
-    [Route("{id}")]
+    [Route("{id:long}")]
     [ProducesResponseType(typeof(ResponseReserveJson), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ResponseErrorMessageJson),StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById(
@@ -53,7 +52,7 @@ public class ReservesController : ControllerBase
     }
 
     [HttpDelete]
-    [Route("{id}")]
+    [Route("{id:long}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ResponseErrorMessageJson), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(
@@ -66,7 +65,7 @@ public class ReservesController : ControllerBase
     }
 
     [HttpPut]
-    [Route("{id}")]
+    [Route("{id:long}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ResponseErrorMessageJson), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ResponseErrorMessageJson), StatusCodes.Status404NotFound)]

@@ -3,7 +3,6 @@ using ReservaAFS.Communication.Requests;
 using ReservaAFS.Communication.Responses;
 using ReservaAFS.Domain.Entities;
 using ReservaAFS.Exception.ExceptionsBase;
-using System.Reflection;
 
 namespace ReservaAFS.Application.UseCases.Users.Create;
 public class CreateUserUseCase : ICreateUserUseCase
@@ -28,9 +27,11 @@ public class CreateUserUseCase : ICreateUserUseCase
 
         var result = validator.Validate(request);
 
-        var errorMessages = result.Errors.Select(failure => failure.ErrorMessage).ToList();
-
         if (!result.IsValid)
+        {
+            var errorMessages = result.Errors.Select(failure => failure.ErrorMessage).ToList();
+
             throw new ErrorOnValidationException(errorMessages);
+        }
     }
 }

@@ -5,7 +5,7 @@ using ReservaAFS.Domain.Repositories.Reserves;
 namespace ReservaAFS.Infrastructure.DataAccess.Repositories;
 internal class ReservesRepository : IReservesReadOnlyRepository, IReservesWriteOnlyRepository, IReserveUpdateOnlyRepository
 {
-    private ReservaAFSDbContext _dbContext;
+    private readonly ReservaAFSDbContext _dbContext;
     public ReservesRepository(ReservaAFSDbContext dbContext)
     {
         _dbContext = dbContext;
@@ -25,8 +25,8 @@ internal class ReservesRepository : IReservesReadOnlyRepository, IReservesWriteO
 
     public async Task<List<Reserve>> GetAll() => await _dbContext.Reserves.AsNoTracking().ToListAsync();
 
-    async Task<Reserve?> IReserveUpdateOnlyRepository.GetById(long id) => await _dbContext.Reserves.FirstOrDefaultAsync(expense => expense.Id == id);
-    async Task<Reserve?> IReservesReadOnlyRepository.GetById(long id) => await _dbContext.Reserves.AsNoTracking().FirstOrDefaultAsync(expense => expense.Id == id);
+    async Task<Reserve?> IReserveUpdateOnlyRepository.GetById(long id) => await _dbContext.Reserves.FirstOrDefaultAsync(reserve => reserve.Id == id);
+    async Task<Reserve?> IReservesReadOnlyRepository.GetById(long id) => await _dbContext.Reserves.AsNoTracking().FirstOrDefaultAsync(reserve => reserve.Id == id);
 
     public void Update(Reserve reserve) => _dbContext.Reserves.Update(reserve);
 }
