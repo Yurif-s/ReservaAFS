@@ -1,34 +1,35 @@
 ﻿using AutoMapper;
 using ReservaAFS.Communication.Requests;
-using ReservaAFS.Communication.Responses;
-using ReservaAFS.Domain.Entities;
 using ReservaAFS.Domain.Repositories;
 using ReservaAFS.Domain.Repositories.Users;
 using ReservaAFS.Exception.ExceptionsBase;
 
-namespace ReservaAFS.Application.UseCases.Users.Create;
-public class CreateUserUseCase : ICreateUserUseCase
+namespace ReservaAFS.Application.UseCases.Users.Update;
+public class UpdateUserUseCase : IUpdateUserUseCase
 {
     private readonly IMapper _mapper;
-    private readonly IUsersWriteOnlyRepository _repository;
+    private readonly IUsersUpdateOnlyRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
-    public CreateUserUseCase(IMapper mapper, IUsersWriteOnlyRepository repository, IUnitOfWork unitOfWork)
+    public UpdateUserUseCase(IMapper mapper,IUsersUpdateOnlyRepository repository, IUnitOfWork unitOfWork)
     {
         _mapper = mapper;
         _repository = repository;
         _unitOfWork = unitOfWork;
     }
-    public async Task<ResponseCreatedUserJson> Execute(RequestUserJson request)
+    public async Task Execute(long id, RequestUserJson request)
     {
         Validate(request);
 
-        var user = _mapper.Map<User>(request);
+        var user = await _repository.GetById(id);
 
-        await _repository.Add(user);
+        if (user is null)
+            throw new NotFoundException("Usuário não encontrado.");
+
+        _mapper.Map(request, user);
+
+        _repository.Update(user);
 
         await _unitOfWork.Commit();
-
-        return _mapper.Map<ResponseCreatedUserJson>(user);
     }
 
     private void Validate(RequestUserJson request)

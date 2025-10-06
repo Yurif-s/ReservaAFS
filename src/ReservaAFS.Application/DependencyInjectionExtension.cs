@@ -11,6 +11,10 @@ using ReservaAFS.Application.UseCases.Reserves.GetAll;
 using ReservaAFS.Application.UseCases.Reserves.GetById;
 using ReservaAFS.Application.UseCases.Reserves.Update;
 using ReservaAFS.Application.UseCases.Users.Create;
+using ReservaAFS.Application.UseCases.Users.Delete;
+using ReservaAFS.Application.UseCases.Users.GetAll;
+using ReservaAFS.Application.UseCases.Users.GetById;
+using ReservaAFS.Application.UseCases.Users.Update;
 
 namespace ReservaAFS.Application;
 public static class DependencyInjectionExtension
@@ -38,5 +42,9 @@ public static class DependencyInjectionExtension
         services.AddScoped<IDeleteReserveUseCase, DeleteReserveUseCase>();
         services.AddScoped<IUpdateReserveUseCase, UpdateReserveUseCase>();
         services.AddScoped<ICreateUserUseCase, CreateUserUseCase>();
+        services.AddScoped<IDeleteUserUseCase, DeleteUserUseCase>();
+        services.AddScoped<IGetAllUsersUseCase, GetAllUsersUseCase>();
+        services.AddScoped<IGetByIdUserUseCase, GetByIdUserUseCase>();
+        services.AddScoped<IUpdateUserUseCase, UpdateUserUseCase>();
     }
 }

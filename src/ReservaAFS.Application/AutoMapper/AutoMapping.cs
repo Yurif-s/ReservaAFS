@@ -26,5 +26,7 @@ public class AutoMapping : Profile
         CreateMap<Reserve, ResponseShortReserveJson>();
         CreateMap<Reserve, ResponseReserveJson>();
         CreateMap<User, ResponseCreatedUserJson>();
+        CreateMap<User, ResponseShortUserJson>();
+        CreateMap<User, ResponseUserJson>();
     }
 }

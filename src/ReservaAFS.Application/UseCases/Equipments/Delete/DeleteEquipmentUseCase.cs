@@ -16,7 +16,6 @@ public class DeleteEquipmentUseCase : IDeleteEquipmentUseCase
     }
     public async Task Execute(long id)
     {
-        
         var result = await _repository.Delete(id);
 
         if (result is false)

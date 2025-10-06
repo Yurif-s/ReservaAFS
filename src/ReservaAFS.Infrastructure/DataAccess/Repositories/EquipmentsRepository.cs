@@ -27,9 +27,9 @@ internal class EquipmentsRepository : IEquipmentsReadOnlyRepository, IEquipments
     public async Task<List<Equipment>> GetAll() => await _dbContext.Equipments.AsNoTracking().ToListAsync();
 
     async Task<Equipment?> IEquipmentsReadOnlyRepository.GetById(long id) =>
-        await _dbContext.Equipments.FirstOrDefaultAsync(equipment => equipment.Id == id);
-    async Task<Equipment?> IEquipmentsUpdateOnlyRepository.GetById(long id) =>
         await _dbContext.Equipments.AsNoTracking().FirstOrDefaultAsync(equipment => equipment.Id == id);
+    async Task<Equipment?> IEquipmentsUpdateOnlyRepository.GetById(long id) =>
+        await _dbContext.Equipments.FirstOrDefaultAsync(equipment => equipment.Id == id);
 
     public void Update(Equipment equipment) => _dbContext.Equipments.Update(equipment);
 }

@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using ReservaAFS.Domain.Repositories;
 using ReservaAFS.Domain.Repositories.Equipments;
 using ReservaAFS.Domain.Repositories.Reserves;
+using ReservaAFS.Domain.Repositories.Users;
 using ReservaAFS.Infrastructure.DataAccess;
 using ReservaAFS.Infrastructure.DataAccess.Repositories;
 
@@ -24,6 +25,9 @@ public static class DependencyInjectionExtension
         services.AddScoped<IReservesReadOnlyRepository, ReservesRepository>();
         services.AddScoped<IReservesWriteOnlyRepository, ReservesRepository>();
         services.AddScoped<IReserveUpdateOnlyRepository, ReservesRepository>();
+        services.AddScoped<IUsersReadOnlyRepository, UsersRepository>();
+        services.AddScoped<IUsersUpdateOnlyRepository, UsersRepository>();
+        services.AddScoped<IUsersWriteOnlyRepository, UsersRepository>();
     }
     private static void AddDbContext(IServiceCollection services, IConfiguration configuration)
     {
