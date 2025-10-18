@@ -1,20 +1,18 @@
 ﻿using AutoMapper;
 using ReservaAFS.Communication.Requests;
-using ReservaAFS.Communication.Responses;
-using ReservaAFS.Domain.Entities;
-using ReservaAFS.Domain.Repositories;
 using ReservaAFS.Domain.Repositories.Users;
-using ReservaAFS.Domain.Security;
+using ReservaAFS.Domain.Repositories;
 using ReservaAFS.Exception.ExceptionsBase;
+using ReservaAFS.Domain.Security;
 
-namespace ReservaAFS.Application.UseCases.Users.Create;
-public class CreateUserUseCase : ICreateUserUseCase
+namespace ReservaAFS.Application.UseCases.Users.ChangePassword;
+public class ChangePasswordUseCase : IChangePasswordUseCase
 {
     private readonly IMapper _mapper;
     private readonly IPasswordEncripter _passwordEncripter;
     private readonly IUsersWriteOnlyRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
-    public CreateUserUseCase(
+    public ChangePasswordUseCase(
         IMapper mapper,
         IPasswordEncripter passwordEncripter,
         IUsersWriteOnlyRepository repository,
@@ -23,28 +21,21 @@ public class CreateUserUseCase : ICreateUserUseCase
         _mapper = mapper;
         _passwordEncripter = passwordEncripter;
         _repository = repository;
-        _unitOfWork = unitOfWork;
+        _unitOfWork = unitOfWork;       
     }
-    public async Task<ResponseCreatedUserJson> Execute(RequestCreateUserJson request)
+    public async Task Execute(RequestChangePasswordJson request)
     {
         Validate(request);
+        
 
-        var user = _mapper.Map<User>(request);
-        user.Password = _passwordEncripter.Encrypt(request.Password);
-        user.UserIdentifier = Guid.NewGuid();
-
-        await _repository.Add(user);
-
-        await _unitOfWork.Commit();
-
-        return _mapper.Map<ResponseCreatedUserJson>(user);
     }
-
-    private void Validate(RequestCreateUserJson request)
+    private void Validate(RequestChangePasswordJson request)
     {
-        var validator = new CreateUserValidator();
+        var validator = new ChangePasswordValidator();
 
         var result = validator.Validate(request);
+
+        var passwordMatch = _passwordEncripter.Verify(request.Password, "");
 
         if (!result.IsValid)
         {

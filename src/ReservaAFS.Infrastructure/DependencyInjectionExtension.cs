@@ -5,14 +5,19 @@ using ReservaAFS.Domain.Repositories;
 using ReservaAFS.Domain.Repositories.Equipments;
 using ReservaAFS.Domain.Repositories.Reserves;
 using ReservaAFS.Domain.Repositories.Users;
+using ReservaAFS.Domain.Security;
 using ReservaAFS.Infrastructure.DataAccess;
 using ReservaAFS.Infrastructure.DataAccess.Repositories;
+using ReservaAFS.Infrastructure.Security.Cryptography;
+
 
 namespace ReservaAFS.Infrastructure;
 public static class DependencyInjectionExtension
 {
     public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddScoped<IPasswordEncripter, Security.Cryptography.BCrypt>();
+
         AddRepositories(services);
         AddDbContext(services, configuration);
     }

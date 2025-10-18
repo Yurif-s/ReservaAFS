@@ -16,7 +16,7 @@ public class UpdateUserUseCase : IUpdateUserUseCase
         _repository = repository;
         _unitOfWork = unitOfWork;
     }
-    public async Task Execute(long id, RequestUserJson request)
+    public async Task Execute(long id, RequestUpdateUserJson request)
     {
         Validate(request);
 
@@ -32,9 +32,9 @@ public class UpdateUserUseCase : IUpdateUserUseCase
         await _unitOfWork.Commit();
     }
 
-    private void Validate(RequestUserJson request)
+    private void Validate(RequestUpdateUserJson request)
     {
-        var validator = new UserValidator();
+        var validator = new UpdateUserValidator();
 
         var result = validator.Validate(request);
 

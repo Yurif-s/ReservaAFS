@@ -10,26 +10,33 @@ namespace ReservaAFS.Application.UseCases.Reserves.Update;
 public class UpdateReserveUseCase : IUpdateReserveUseCase
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IReserveUpdateOnlyRepository _repository;
+    private readonly IReservesReadOnlyRepository _readRepository;
+    private readonly IReserveUpdateOnlyRepository _updateRepository;
     private readonly IMapper _mapper;
-    public UpdateReserveUseCase(IUnitOfWork unitOfWork, IReserveUpdateOnlyRepository repository, IMapper mapper)
+    public UpdateReserveUseCase(IUnitOfWork unitOfWork, IReservesReadOnlyRepository readRepository, IReserveUpdateOnlyRepository updateRepository, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
-        _repository = repository;
+        _readRepository = readRepository;
+        _updateRepository = updateRepository;
         _mapper = mapper;
     }
     public async Task Execute(long id, RequestReserveJson request)
     {
         Validate(request);
 
-        var reserve = await _repository.GetById(id);
+        var reserve = await _updateRepository.GetById(id);
 
         if (reserve is null)
             throw new NotFoundException(ResourceErrorMessages.RESERVE_NOT_FOUND);
 
         _mapper.Map(request, reserve);
 
-        _repository.Update(reserve);
+        var result = await _readRepository.IsAvailable(reserve.EquipmentId, reserve.ReservationTime, reserve.Class, id);
+
+        if (result is false)
+            throw new ErrorOnValidationException(["Conflito de horário."]);
+
+        _updateRepository.Update(reserve);
 
         await _unitOfWork.Commit();
     }

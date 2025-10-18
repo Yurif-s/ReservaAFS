@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ReservaAFS.Application.UseCases.Reserves.Delete;
-using ReservaAFS.Application.UseCases.Reserves.Update;
 using ReservaAFS.Application.UseCases.Users.Create;
 using ReservaAFS.Application.UseCases.Users.Delete;
 using ReservaAFS.Application.UseCases.Users.GetAll;
@@ -19,7 +17,7 @@ public class UsersController : ControllerBase
     [ProducesResponseType(typeof(ResponseErrorMessageJson), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Create(
         [FromServices] ICreateUserUseCase useCase,
-        [FromBody] RequestUserJson request)
+        [FromBody] RequestCreateUserJson request)
     {
         var response = await useCase.Execute(request);
 
@@ -73,7 +71,7 @@ public class UsersController : ControllerBase
     [ProducesResponseType(typeof(ResponseErrorMessageJson), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Update(
         [FromServices] IUpdateUserUseCase useCase,
-        [FromBody] RequestUserJson request,
+        [FromBody] RequestUpdateUserJson request,
         [FromRoute] long id)
     {
         await useCase.Execute(id, request);

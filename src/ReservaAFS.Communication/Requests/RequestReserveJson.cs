@@ -5,8 +5,7 @@ public class RequestReserveJson
 {
     public DateTime ReservationTime { get; set; }
     public string Description { get; set; } = string.Empty;
-    public long IdEquipment { get; set; }
-    public long IdUser { get; set; }
-    //public long IdClass { get; set; }
+    public long EquipmentId { get; set; }
+    public long UserId { get; set; }
     public int Class { get; set; }
 }

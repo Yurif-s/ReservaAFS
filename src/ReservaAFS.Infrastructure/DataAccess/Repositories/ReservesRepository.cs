@@ -29,4 +29,15 @@ internal class ReservesRepository : IReservesReadOnlyRepository, IReservesWriteO
     async Task<Reserve?> IReservesReadOnlyRepository.GetById(long id) => await _dbContext.Reserves.AsNoTracking().FirstOrDefaultAsync(reserve => reserve.Id == id);
 
     public void Update(Reserve reserve) => _dbContext.Reserves.Update(reserve);
+
+    public async Task<bool> IsAvailable(long id, DateTime reservationTime, int classNumber, long reserveIdToIgnore = 0)
+    {
+        var conflicting = await _dbContext.Reserves
+            .AnyAsync(reserve => reserve.EquipmentId == id &&
+                        reserve.ReservationTime.Date == reservationTime.Date &&
+                        reserve.Class == classNumber &&
+                        reserve.Id != reserveIdToIgnore);
+
+        return !conflicting;
+    }
 }

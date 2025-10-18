@@ -10,12 +10,14 @@ namespace ReservaAFS.Application.UseCases.Reserves.Create;
 public class CreateReserveUseCase : ICreateReserveUseCase
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IReservesWriteOnlyRepository _repository;
+    private readonly IReservesWriteOnlyRepository _writeRepository;
+    private readonly IReservesReadOnlyRepository _readRepository;
     private readonly IMapper _mapper;
-    public CreateReserveUseCase(IReservesWriteOnlyRepository repository, IUnitOfWork unitOfWork, IMapper mapper)
+    public CreateReserveUseCase(IReservesReadOnlyRepository readRepository ,IReservesWriteOnlyRepository writeRepository, IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
-        _repository = repository;
+        _readRepository = readRepository;
+        _writeRepository = writeRepository;
         _mapper = mapper;
     }
     public async Task<ResponseCreatedReserveJson> Execute(RequestReserveJson request)
@@ -24,7 +26,12 @@ public class CreateReserveUseCase : ICreateReserveUseCase
 
         var entity = _mapper.Map<Reserve>(request);
 
-        await _repository.Add(entity);
+        var result = await _readRepository.IsAvailable(entity.EquipmentId, entity.ReservationTime, entity.Class);
+
+        if (result is false)
+            throw new ErrorOnValidationException(["Conflito de horário"]);
+
+        await _writeRepository.Add(entity);
 
         await _unitOfWork.Commit();
 
