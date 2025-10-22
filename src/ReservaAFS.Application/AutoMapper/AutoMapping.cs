@@ -18,6 +18,7 @@ public class AutoMapping : Profile
         CreateMap<RequestEquipmentJson, Equipment>();
         CreateMap<RequestCreateUserJson, User>();
         CreateMap<RequestUpdateUserJson, User>();
+        CreateMap<RequestChangePasswordJson, User>();
     }
     private void EntityToResponse()
     {
