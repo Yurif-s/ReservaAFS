@@ -9,6 +9,6 @@ public class RequestReserveJsonBuilder
     {
         return new Faker<RequestReserveJson>()
             .RuleFor(request => request.ReservationTime, faker => faker.Date.Future())
-            .RuleFor(r => r.Description, f => f.Commerce.ProductDescription())
+            .RuleFor(r => r.Description, f => f.Commerce.ProductDescription());
     }
 }

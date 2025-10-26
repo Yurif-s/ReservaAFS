@@ -2,6 +2,7 @@ using ReservaAFS.Api.Filters;
 using ReservaAFS.Api.Middlewares;
 using ReservaAFS.Application;
 using ReservaAFS.Infrastructure;
+using ReservaAFS.Infrastructure.Migrations;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -32,4 +33,13 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+await MigrateDatabase();
+
 app.Run();
+
+async Task MigrateDatabase()
+{
+    await using var scope = app.Services.CreateAsyncScope();
+
+    await DatabaseMigration.MigrateDatabase(scope.ServiceProvider);   
+}
